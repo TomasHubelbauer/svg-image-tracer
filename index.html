@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8" />
+    <title>SVG Image Tracer</title>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <h1>SVG Image Tracer</h1>
+    <p>Upload an image to start tracing over it.</p>
+    <input type="file" id="fileInput" />
+    <canvas id="traceCanvas"></canvas>
+    <div>
+      <span id="pathCountSpan"></span>
+      <button id="popPointButton">Pop point</button>
+      <span id="pathCountSpan"></span>
+      <button id="splitPathButton">Split path</button>
+    </div>
+    <svg id="vectorSvg"></svg>
+    <div>
+      <input type="checkbox" checked id="animateInput" />
+      <label for="animateInput">Animate</label>  
+    </div>
+    <div>
+      <label for="animationDurationInput">Animation duration:</label>
+      <input type="number" value="1" min="0" max="1000" id="animationDurationInput" />
+      <select id="animationDurationUnitSelect">
+        <option value="ms">milliseconds</option>
+        <option selected value="s">seconds</option>
+      </select>
+    </div>
+    <div>
+      <label for="animationTimingFunctionSelect">Animation timing function:</label>
+      <select id="animationTimingFunctionSelect">
+        <option>ease</option>
+        <option>ease-in</option>
+        <option>ease-out</option>
+        <option>ease-in-out</option>
+        <option selected>linear</option>
+        <option>step-start</option>
+        <option>step-end</option>
+        <option value=''>value:</option>
+      </select>
+      <input id="animationTimingFunctionValueInput" />
+    </div>
+    <div>
+      <label for="animationDelayInput">Animation delay:</label>
+      <input type="number" value="0" min="-1000" max="1000" id="animationDelayInput" />
+      <select id="animationDelayUnitSelect">
+        <option value="ms">milliseconds</option>
+        <option selected value="s">seconds</option>
+      </select>
+    </div>
+    <div>
+      <label for="animationIterationCountInput">Animation iteration count:</label>
+      <input type="radio" name="animationIterationCount" id="animationIterationCountNotInfiniteInput" />
+      <input type="number" value="0" min="0" max="1000" id="animationIterationCountInput" />
+      <input type="radio" name="animationIterationCount" checked id="animationIterationCountInfiniteInput" />
+      <label for="animationIterationCountInfiniteInput">Infinite</label>
+    </div>
+    <div>
+      <label for="animationDirectionSelect">Animation direction:</label>
+      <select id="animationDirectionSelect">
+        <option>normal</option>
+        <option>reverse</option>
+        <option selected>alternate</option>
+        <option>alternate-reverse</option>
+      </select>
+    </div>
+    <button id="copySourceButton">Copy source code</button>
+  </body>
+</html>

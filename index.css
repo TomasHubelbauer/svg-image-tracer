@@ -1,0 +1,49 @@
+body {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  font: icon;
+}
+
+body > div {
+  align-items: center;
+  display: flex;
+}
+
+#traceCanvas {
+  flex-grow: 1;
+  outline: 1px solid black;
+}
+
+#vectorSvg {
+  /* https://stackoverflow.com/a/35362074/2715716 */
+  background-image: linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  outline: 1px solid black;
+}
+
+/* Note that the CSS variables are set by JavaScript */
+#vectorSvg.animate polyline {
+  stroke-dasharray: var(--polyline-length);
+  stroke-dashoffset: var(--polyline-length);
+  animation-name: dash;
+  animation-duration: var(--animation-duration);
+  animation-timing-function: var(--animation-timing-function);
+  animation-delay: var(--animation-delay);
+  animation-iteration-count: var(--animation-iteration-count);
+  animation-direction: var(--animation-direction);
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: var(--polyline-length);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
