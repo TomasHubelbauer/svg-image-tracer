@@ -5,9 +5,8 @@ body {
   font: icon;
 }
 
-body > div {
-  align-items: center;
-  display: flex;
+#workspaceDiv {
+  overflow: auto;
 }
 
 #traceCanvas {
@@ -42,6 +41,11 @@ body > div {
   to {
     stroke-dashoffset: 0;
   }
+}
+
+.controlDiv {
+  align-items: center;
+  display: flex;
 }
 
 .hidden {

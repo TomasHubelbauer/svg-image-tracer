@@ -2,8 +2,10 @@ window.addEventListener('load', _event => {
   let bitmapSource;
   let paths = [[]];
   let context;
+  let zoom = 2;
 
   const fileInput = document.querySelector('#fileInput');
+  const workspaceDiv = document.querySelector('#workspaceDiv');
   const traceCanvas = document.querySelector('#traceCanvas');
   const vectorSvg = document.querySelector('#vectorSvg');
 
@@ -29,8 +31,10 @@ window.addEventListener('load', _event => {
     sizeImg.addEventListener('load', async event => {
       bitmapSource = await createImageBitmap(event.currentTarget);
       URL.revokeObjectURL(rasterUrl);
-      traceCanvas.width = bitmapSource.width;
-      traceCanvas.height = bitmapSource.height;
+      workspaceDiv.style.width = bitmapSource.width + 'px';
+      workspaceDiv.style.height = bitmapSource.height + 'px';
+      traceCanvas.width = bitmapSource.width * zoom;
+      traceCanvas.height = bitmapSource.height * zoom;
       vectorSvg.setAttribute('width', bitmapSource.width);
       vectorSvg.setAttribute('height', bitmapSource.height);
       paths = [[]];
@@ -52,7 +56,7 @@ window.addEventListener('load', _event => {
   }
 
   function render() {
-    context.drawImage(bitmapSource, 0, 0);
+    context.drawImage(bitmapSource, 0, 0, bitmapSource.width * zoom, bitmapSource.height * zoom);
     if (paths.length === 0) {
       return;
     }
@@ -64,46 +68,44 @@ window.addEventListener('load', _event => {
 
       context.beginPath();
 
-      context.moveTo(path[0].x, path[0].y);
+      context.moveTo(path[0].x * zoom, path[0].y * zoom);
       for (let index = 1; index < path.length; index++) {
-        const x = path[index].x;
-        const y = path[index].y;
+        const x = path[index].x * zoom;
+        const y = path[index].y * zoom;
         context.lineTo(x, y);
       }
   
-      context.closePath();
       context.stroke();
     }
 
-    if (vectorSvg.children.length === 0) {
+    vectorSvg.innerHTML = '';
+    for (let path of paths) {
       const pathPolyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
       pathPolyline.setAttribute('fill', 'none');
       pathPolyline.setAttribute('stroke', 'black');
-      vectorSvg.appendChild(pathPolyline);
-    }
-
-    if (vectorSvg.children.length !== paths.length) {
-      alert('The SVG element was corrupted.');
-      return;
-    }
-
-    let counter = 0;
-    for (let path of paths) {
-      const pathPolyline = vectorSvg.children[counter++];
       pathPolyline.setAttribute('points', path.map(c => `${c.x},${c.y} `).join(''));
       pathPolyline.style.setProperty('--polyline-length', pathPolyline.getTotalLength());
+      vectorSvg.appendChild(pathPolyline);
     }
   }
 
   traceCanvas.addEventListener('pointerdown', event => {
-    paths[paths.length - 1].push({ x: event.offsetX, y: event.offsetY });
+    paths[paths.length - 1].push({ x: event.offsetX / zoom, y: event.offsetY / zoom });
     render();
   });
 
   // Pop point
   const popPointButton = document.querySelector('#popPointButton');
   popPointButton.addEventListener('click', _event => {
+    if (paths.length === 0) {
+      return;
+    }
+
     paths[paths.length - 1].pop();
+    if (paths[paths.length - 1].length === 0) {
+      paths.pop();
+    }
+
     render();
   });
 

@@ -10,7 +10,9 @@
     <h1>SVG Image Tracer</h1>
     <p>Upload an image to start tracing over it.</p>
     <input type="file" id="fileInput" />
-    <canvas id="traceCanvas"></canvas>
+    <div id="workspaceDiv">
+      <canvas id="traceCanvas"></canvas>
+    </div>
     <div>
       <span id="pathCountSpan"></span>
       <button id="popPointButton">Pop point</button>
@@ -18,11 +20,11 @@
       <button id="splitPathButton">Split path</button>
     </div>
     <svg id="vectorSvg"></svg>
-    <div>
+    <div class="controlDiv">
       <input type="checkbox" checked id="animateInput" />
       <label for="animateInput">Animate</label>  
     </div>
-    <div>
+    <div class="controlDiv">
       <label for="animationDurationInput">Animation duration:</label>
       <input type="number" value="1" min="0" max="1000" id="animationDurationInput" />
       <select id="animationDurationUnitSelect">
@@ -30,7 +32,7 @@
         <option selected value="s">seconds</option>
       </select>
     </div>
-    <div>
+    <div class="controlDiv">
       <label for="animationTimingFunctionSelect">Animation timing function:</label>
       <select id="animationTimingFunctionSelect">
         <option>ease</option>
@@ -44,7 +46,7 @@
       </select>
       <input id="animationTimingFunctionValueInput" />
     </div>
-    <div>
+    <div class="controlDiv">
       <label for="animationDelayInput">Animation delay:</label>
       <input type="number" value="0" min="-1000" max="1000" id="animationDelayInput" />
       <select id="animationDelayUnitSelect">
@@ -52,14 +54,14 @@
         <option selected value="s">seconds</option>
       </select>
     </div>
-    <div>
+    <div class="controlDiv">
       <label for="animationIterationCountInput">Animation iteration count:</label>
       <input type="radio" name="animationIterationCount" id="animationIterationCountNotInfiniteInput" />
       <input type="number" value="0" min="0" max="1000" id="animationIterationCountInput" />
       <input type="radio" name="animationIterationCount" checked id="animationIterationCountInfiniteInput" />
       <label for="animationIterationCountInfiniteInput">Infinite</label>
     </div>
-    <div>
+    <div class="controlDiv">
       <label for="animationDirectionSelect">Animation direction:</label>
       <select id="animationDirectionSelect">
         <option>normal</option>
